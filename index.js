@@ -22,7 +22,7 @@ imageSrcList.forEach((el, index) => {
   downloadImage(el.src, filePath).catch(console.error);
 });
 // console.log(imageSrcList);
-//test
+// test
 const files = fs.readdirSync('./memes');
 const filesAsString = files.join(',');
 
@@ -43,7 +43,7 @@ const expectedFileHashes = {
 const expectedFilesAsString = Object.keys(expectedFileHashes).join(',');
 console.log(expectedFilesAsString);
 console.log(filesAsString === expectedFilesAsString);
-//test
+// test
 
 // Async function which scrapes the data
 async function scrapeData(url) {
