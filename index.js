@@ -1,5 +1,7 @@
 import fs from 'node:fs';
-import * as client from 'node:https';
+// import * as client from 'node:https';
+import * as stream from 'node:stream';
+import { promisify } from 'node:util';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
@@ -69,7 +71,7 @@ async function scrapeData(url) {
       .once('close', () => resolve(filepath));
   });
 } */
-async function downloadImage(url, filepath) {
+/* async function downloadImage(url, filepath) {
   return await new Promise((resolve, reject) => {
     client.get(url, (res) => {
       if (res.statusCode === 200) {
@@ -86,4 +88,18 @@ async function downloadImage(url, filepath) {
       }
     });
   });
+}
+*/
+async function downloadImage(url, filepath) {
+  const finishedDownload = promisify(stream.finished);
+  const writer = fs.createWriteStream(filepath);
+
+  const response = await axios({
+    method: 'GET',
+    url: url,
+    responseType: 'stream',
+  });
+
+  response.data.pipe(writer);
+  await finishedDownload(writer);
 }
