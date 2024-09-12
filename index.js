@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { readdir, readFile } from 'node:fs/promises';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
@@ -19,14 +20,16 @@ imageSrcList.forEach((el, index) => {
   else filePath = `${DIR}\\${index + 1}.jpg`;
   // console.log(el.src + ' : ' + filePath);
   // download image and save to the file path
-  downloadImage(el.src, filePath).catch(console.error);
+  downloadImage(el.src, filePath)
+    .then(console.log('Downloaded.'))
+    .catch(console.error);
 });
 // console.log(imageSrcList);
 // test
-const files = fs.readdirSync('./memes');
+/*const files = await readdir('./memes');
 const filesAsString = files.join(',');
 
-console.log(filesAsString);
+console.log('filesAsString:' + filesAsString);
 
 const expectedFileHashes = {
   '01.jpg': '41a1efb58477bbf47c2270097c6a241557a335814794abde5977399dfd7331ba',
@@ -41,8 +44,8 @@ const expectedFileHashes = {
   '10.jpg': 'de1e6994215d88ed2a4d82d8336c6049c479a22c7a7a53bfb95ef6fe4a3335d4',
 };
 const expectedFilesAsString = Object.keys(expectedFileHashes).join(',');
-console.log(expectedFilesAsString);
-console.log(filesAsString === expectedFilesAsString);
+console.log('expectedFilesAsString: ' + expectedFilesAsString);
+console.log(filesAsString === expectedFilesAsString);*/
 // test
 
 // Async function which scrapes the data

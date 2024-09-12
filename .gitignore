@@ -6,3 +6,4 @@ npm-debug.log*
 *.tsbuildinfo
 
 memes/
+test.js
