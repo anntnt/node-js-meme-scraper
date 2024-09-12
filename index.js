@@ -22,6 +22,28 @@ imageSrcList.forEach((el, index) => {
   downloadImage(el.src, filePath).catch(console.error);
 });
 // console.log(imageSrcList);
+//test
+const files = fs.readdirSync('./memes');
+const filesAsString = files.join(',');
+
+console.log(filesAsString);
+
+const expectedFileHashes = {
+  '01.jpg': '41a1efb58477bbf47c2270097c6a241557a335814794abde5977399dfd7331ba',
+  '02.jpg': 'c9f186504728df2d81b243c72f794d999d649687f6e5efc46388d0e021249c4b',
+  '03.jpg': 'c8bb155a9857c813f0930a2f2219122ceb975d982fdf12b39175f39994e1cf67',
+  '04.jpg': 'b5560e8098843d65060439e530707b32ec207540990aa7a715db78c3983f1018',
+  '05.jpg': 'b1d802552e8a3909fe1d62f66350faf82c36eac9d088d50026116d933ab2f013',
+  '06.jpg': 'bb9b0ece0ef301f912e0b54a3e7d45d92e44a307c4b3cee28a4b80330dfc9bc7',
+  '07.jpg': '7a14f0161f259d9de48a0ff8a5ddeaf97154b0a39fa219f4b296e5ad31f86156',
+  '08.jpg': '47dd2de3c1633e624c582010fd4ee9cca60a7e612835b4d89f98ca199da397d5',
+  '09.jpg': '29774b4cff11307c3e849f0cc4a63b3711810aa9449652edf8d72276ba6cf7db',
+  '10.jpg': 'de1e6994215d88ed2a4d82d8336c6049c479a22c7a7a53bfb95ef6fe4a3335d4',
+};
+const expectedFilesAsString = Object.keys(expectedFileHashes).join(',');
+console.log(expectedFilesAsString);
+console.log(filesAsString === expectedFilesAsString);
+//test
 
 // Async function which scrapes the data
 async function scrapeData(url) {
