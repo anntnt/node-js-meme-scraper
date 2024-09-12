@@ -21,7 +21,7 @@ for (const [index, el] of imageSrcList.entries()) {
   else filePath = `${DIR}\\${index + 1}.jpg`;
   // console.log(el.src + ' : ' + filePath);
   // download image and save to the file path
-  downloadImage(el.src, filePath)
+  await downloadImage(el.src, filePath)
     .then(console.log('Downloaded.'))
     .catch(console.error);
 }
