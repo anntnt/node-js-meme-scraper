@@ -67,8 +67,8 @@ async function scrapeData(url) {
       .once('close', () => resolve(filepath));
   });
 } */
-function downloadImage(url, filepath) {
-  return new Promise((resolve, reject) => {
+async function downloadImage(url, filepath) {
+  return await new Promise((resolve, reject) => {
     client.get(url, (res) => {
       if (res.statusCode === 200) {
         res
