@@ -13,7 +13,8 @@ if (!fs.existsSync(DIR)) {
 
 // Invoke the function scrapeData() to get list of the first 10 images from the website
 const imageSrcList = await scrapeData(URL);
-imageSrcList.forEach((el, index) => {
+// imageSrcList.forEach((el, index) => {
+for (const [index, el] of imageSrcList.entries()) {
   let filePath;
   // create file path
   if (index < 9) filePath = `${DIR}\\0${index + 1}.jpg`;
@@ -23,7 +24,8 @@ imageSrcList.forEach((el, index) => {
   downloadImage(el.src, filePath)
     .then(console.log('Downloaded.'))
     .catch(console.error);
-});
+}
+// });
 // console.log(imageSrcList);
 
 // Async function which scrapes the data
