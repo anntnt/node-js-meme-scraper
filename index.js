@@ -54,7 +54,7 @@ async function scrapeData(url) {
   }
 }
 
-/*async function downloadImage(url, filepath) {
+/* async function downloadImage(url, filepath) {
   const response = await axios({
     url,
     method: 'GET',
@@ -66,7 +66,7 @@ async function scrapeData(url) {
       .on('error', reject)
       .once('close', () => resolve(filepath));
   });
-}*/
+} */
 function downloadImage(url, filepath) {
   return new Promise((resolve, reject) => {
     client.get(url, (res) => {
