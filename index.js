@@ -3,15 +3,20 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 
 // URL of the page we want to scrape
-const url = 'https://memegen-link-examples-upleveled.netlify.app';
+const URL = 'https://memegen-link-examples-upleveled.netlify.app';
+const DIR = './memes';
+
+if (!fs.existsSync(DIR)) {
+  fs.mkdirSync(DIR);
+}
 
 // Invoke the function scrapeData() to get list of the first 10 images from the website
-const imageSrcList = await scrapeData();
+const imageSrcList = await scrapeData(URL);
 imageSrcList.forEach((el, index) => {
   let filePath;
   // create file path
-  if (index < 9) filePath = `memes\\0${index + 1}.jpg`;
-  else filePath = `memes\\${index + 1}.jpg`;
+  if (index < 9) filePath = `${DIR}\\0${index + 1}.jpg`;
+  else filePath = `${DIR}\\${index + 1}.jpg`;
   // console.log(el.src + ' : ' + filePath);
   // download image and save to the file path
   downloadImage(el.src, filePath).catch(console.error);
@@ -19,7 +24,7 @@ imageSrcList.forEach((el, index) => {
 // console.log(imageSrcList);
 
 // Async function which scrapes the data
-async function scrapeData() {
+async function scrapeData(url) {
   try {
     // Fetch HTML of the page we want to scrape
     const { data } = await axios.get(url);
@@ -46,7 +51,7 @@ async function scrapeData() {
   }
 }
 
-async function downloadImage(imgUrl, filepath) {
+async function downloadImage(url, filepath) {
   const response = await axios({
     url,
     method: 'GET',
