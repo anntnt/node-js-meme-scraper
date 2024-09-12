@@ -1,24 +1,22 @@
 import fs from 'node:fs';
-import https from 'node:https';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
 // URL of the page we want to scrape
 const url = 'https://memegen-link-examples-upleveled.netlify.app';
-const filenames = [];
 
 // Invoke the function scrapeData() to get list of the first 10 images from the website
 const imageSrcList = await scrapeData();
 imageSrcList.forEach((el, index) => {
   let filePath;
-  //create file path
+  // create file path
   if (index < 9) filePath = `memes\\0${index + 1}.jpg`;
   else filePath = `memes\\${index + 1}.jpg`;
-  console.log(el.src + ' : ' + filePath);
-  //download image and save to the file path
-  downloadImage(el.src, filePath);
+  // console.log(el.src + ' : ' + filePath);
+  // download image and save to the file path
+  downloadImage(el.src, filePath).catch(console.error);
 });
-//console.log(imageSrcList);
+// console.log(imageSrcList);
 
 // Async function which scrapes the data
 async function scrapeData() {
@@ -34,10 +32,10 @@ async function scrapeData() {
     // Use for loop through the a we selected
     for (let i = 0; i < 10; i++) {
       // Object holding data for each country/jurisdiction
-      let src;
+      let src = '';
       const imageLink = { src: '' };
       src = $(listItems[i]).children('img').attr('src');
-      //remove the substring '?width=300' from image source
+      // remove the substring '?width=300' from image source
       imageLink.src = src.slice(0, src.indexOf('?'));
       // Populate imageLinks array with image source
       imageLinks.push(imageLink);
@@ -48,21 +46,16 @@ async function scrapeData() {
   }
 }
 
-function downloadImage(url, filepath) {
+async function downloadImage(imgUrl, filepath) {
+  const response = await axios({
+    url,
+    method: 'GET',
+    responseType: 'stream',
+  });
   return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      if (res.statusCode === 200) {
-        res
-          .pipe(fs.createWriteStream(filepath))
-          .on('error', reject)
-          .once('close', () => resolve(filepath));
-      } else {
-        // Consume response data to free up memory
-        res.resume();
-        reject(
-          new Error(`Request Failed With a Status Code: ${res.statusCode}`),
-        );
-      }
-    });
+    response.data
+      .pipe(fs.createWriteStream(filepath))
+      .on('error', reject)
+      .once('close', () => resolve(filepath));
   });
 }
