@@ -27,20 +27,20 @@ async function scrapeData(url) {
     const { data } = await axios.get(url);
     // Load HTML we fetched in the previous line
     const $ = cheerio.load(data);
-    // Select all the list items in plainlist class
+    // Select all the list items in plainlist id
     const listItems = $('#images div a');
     // Stores data for the first 10 image sources
     const imageLinks = [];
     // Use for loop through the a we selected
     for (let i = 0; i < 10; i++) {
-      // Object holding data for each country/jurisdiction
-      let src = '';
+      // let src = '';
       const imageLink = { src: '' };
-      src = $(listItems[i]).children('img').attr('src');
+      imageLink.src = $(listItems[i]).children('img').attr('src');
       // remove the substring '?width=300' from image source
-      imageLink.src = src.slice(0, src.indexOf('?'));
+      // imageLink.src = src.slice(0, src.indexOf('?'));
       // Populate imageLinks array with image source
       imageLinks.push(imageLink);
+      // console.log(imageLink);
     }
     // return imageLinks;
     // const imageLinks = await scrapeData(URL);
