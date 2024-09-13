@@ -1,12 +1,11 @@
 import fs from 'node:fs';
-// import * as client from 'node:https';
 import process from 'node:process';
-// import * as stream from 'node:stream';
-// import { promisify } from 'node:util';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-// let html_data;
+// import * as client from 'node:https';
+// import * as stream from 'node:stream';
+// import { promisify } from 'node:util';
 
 // URL of the page we want to scrape
 const URL = 'https://memegen-link-examples-upleveled.netlify.app';
@@ -54,7 +53,7 @@ async function scrapeData(url) {
       // console.log(el.src + ' : ' + filePath);
       // download image and save to the file path
       await downloadImage(el.src, filePath);
-      console.log('Downloaded.' + el.src + 'to ' + filePath);
+      console.log('Downloaded ' + el.src + ' to ' + filePath);
     }
   } catch (err) {
     console.error(err);
