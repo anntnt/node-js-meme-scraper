@@ -48,8 +48,8 @@ async function scrapeData(url) {
     for (const [index, el] of imageLinks.entries()) {
       let filePath;
       // create file path
-      if (index < 9) filePath = `${DIR}\/0${index + 1}.jpg`;
-      else filePath = `${DIR}\/${index + 1}.jpg`;
+      if (index < 9) filePath = `${DIR}/0${index + 1}.jpg`;
+      else filePath = `${DIR}/${index + 1}.jpg`;
       // console.log(el.src + ' : ' + filePath);
       // download image and save to the file path
       await downloadImage(el.src, filePath);
