@@ -1,9 +1,12 @@
 import fs from 'node:fs';
 // import * as client from 'node:https';
+import process from 'node:process';
 // import * as stream from 'node:stream';
 // import { promisify } from 'node:util';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+
+// let html_data;
 
 // URL of the page we want to scrape
 const URL = 'https://memegen-link-examples-upleveled.netlify.app';
@@ -12,24 +15,11 @@ const DIR = './memes';
 if (!fs.existsSync(DIR)) {
   fs.mkdirSync(DIR);
 }
-
 await scrapeData(URL);
-// Invoke the function scrapeData() to get list of the first 10 images from the website
-/* const imageSrcList = await scrapeData(URL);
-// imageSrcList.forEach((el, index) => {
-for (const [index, el] of imageSrcList.entries()) {
-  let filePath;
-  // create file path
-  if (index < 9) filePath = `${DIR}\\0${index + 1}.jpg`;
-  else filePath = `${DIR}\\${index + 1}.jpg`;
-  // console.log(el.src + ' : ' + filePath);
-  // download image and save to the file path
-  await downloadImage(el.src, filePath)
-    .then(console.log('Downloaded.'))
-    .catch(console.error);
-}*/
-// });
-// console.log(imageSrcList);
+
+process.on('exit', (code) => {
+  console.log(`About to exit with code: ${code}`);
+});
 
 // Async function which scrapes the data
 async function scrapeData(url) {
@@ -63,9 +53,8 @@ async function scrapeData(url) {
       else filePath = `${DIR}\\${index + 1}.jpg`;
       // console.log(el.src + ' : ' + filePath);
       // download image and save to the file path
-      await downloadImage(el.src, filePath)
-        .then(console.log('Downloaded.' + el.src + 'to' + filePath))
-        .catch(console.error);
+      await downloadImage(el.src, filePath);
+      console.log('Downloaded.' + el.src + 'to ' + filePath);
     }
   } catch (err) {
     console.error(err);
@@ -85,6 +74,23 @@ async function downloadImage(url, filepath) {
       .once('close', () => resolve(filepath));
   });
 }
+
+// Invoke the function scrapeData() to get list of the first 10 images from the website
+/* const imageSrcList = await scrapeData(URL);
+// imageSrcList.forEach((el, index) => {
+for (const [index, el] of imageSrcList.entries()) {
+  let filePath;
+  // create file path
+  if (index < 9) filePath = `${DIR}\\0${index + 1}.jpg`;
+  else filePath = `${DIR}\\${index + 1}.jpg`;
+  // console.log(el.src + ' : ' + filePath);
+  download image and save to the file path
+  await downloadImage(el.src, filePath)
+    .then(console.log('Downloaded.'))
+    .catch(console.error);
+}
+// });
+// console.log(imageSrcList);*/
 /* async function downloadImage(url, filepath) {
   return await new Promise((resolve, reject) => {
     client.get(url, (res) => {
@@ -117,3 +123,19 @@ async function downloadImage(url, filepath) {
   response.data.pipe(writer);
   await finishedDownload(writer);
 }*/
+
+/* ******************** */
+/* client
+  .get(URL, function (res) {
+    console.log(res.statusCode);
+    res.setEncoding('utf8');
+    res.on('data', function (data) {
+      const $ = cheerio.load(data);
+      console.log(typeof $.html());
+    });
+  })
+  .on('error', function (err) {
+    console.log(err);
+  });*/
+
+/* ****************** */
