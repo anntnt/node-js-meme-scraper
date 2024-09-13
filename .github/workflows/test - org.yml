@@ -41,9 +41,7 @@ jobs:
               process.exit(1);
             }
 
-            const { stdout, stderr } = await execAsync('node index.js');
-            console.log('stdout:', stdout);
-            console.error('stderr:', stderr);
+            await execAsync('node index.js');
 
             const expectedFileHashes = {
               '01.jpg': '41a1efb58477bbf47c2270097c6a241557a335814794abde5977399dfd7331ba',
