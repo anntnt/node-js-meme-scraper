@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-// import * as client from 'node:https';
+import * as client from 'node:https';
 import * as stream from 'node:stream';
 import { promisify } from 'node:util';
 import axios from 'axios';
@@ -58,7 +58,7 @@ async function scrapeData(url) {
   }
 }
 
-/* async function downloadImage(url, filepath) {
+async function downloadImage(url, filepath) {
   const response = await axios({
     url,
     method: 'GET',
@@ -70,8 +70,8 @@ async function scrapeData(url) {
       .on('error', reject)
       .once('close', () => resolve(filepath));
   });
-} */
-/* async function downloadImage(url, filepath) {
+}
+/*async function downloadImage(url, filepath) {
   return await new Promise((resolve, reject) => {
     client.get(url, (res) => {
       if (res.statusCode === 200) {
@@ -88,9 +88,9 @@ async function scrapeData(url) {
       }
     });
   });
-}
-*/
-async function downloadImage(url, filepath) {
+}*/
+
+/*async function downloadImage(url, filepath) {
   const finishedDownload = promisify(stream.finished);
   const writer = fs.createWriteStream(filepath);
 
@@ -102,4 +102,4 @@ async function downloadImage(url, filepath) {
 
   response.data.pipe(writer);
   await finishedDownload(writer);
-}
+}*/

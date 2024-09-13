@@ -57,9 +57,9 @@ jobs:
             };
 
             // Read all files in directory and print the SHA-256 hash of each file
-            const files = await readdir('./memes');
+            const files = await await readdir('./memes');
 
-            const filesAsString = files.join(',');
+            const filesAsString = await files.join(',');
             const expectedFilesAsString = Object.keys(expectedFileHashes).join(',');
 
             if (filesAsString !== expectedFilesAsString) {
@@ -74,7 +74,7 @@ jobs:
             let anyFileHashesFailedMatch;
 
             for (const file of files) {
-              const fileHash = hash('sha256', await readFile(`./memes/${file}`));
+              const fileHash = await hash('sha256', await readFile(`./memes/${file}`));
 
               if (fileHash !== expectedFileHashes[file]) {
                 console.log(
