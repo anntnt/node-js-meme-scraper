@@ -10,11 +10,9 @@ const DIR = './memes';
 if (!fs.existsSync(DIR)) {
   fs.mkdirSync(DIR);
 }
-// await scrapeData(URL);
 
 const imageLinks = await scrapeData(URL);
 imageLinks.forEach((el, index) => {
-  // for (const [index, el] of imageLinks.entries()) {
   let filePath;
   // create file path
   if (index < 9) filePath = `${DIR}/0${index + 1}.jpg`;
@@ -24,7 +22,7 @@ imageLinks.forEach((el, index) => {
   // console.log('Downloaded ' + el.src + ' to ' + filePath);
 });
 
-// see if the program works
+// see if the program works without error
 process.on('exit', (code) => {
   console.log(`About to exit with code: ${code}`);
 });
@@ -38,7 +36,6 @@ async function scrapeData(url) {
     const $ = cheerio.load(data);
     // Select all the list items in plainlist id
     const listItems = $('#images div a');
-    //console.log(listItems);
     // Stores data for the first 10 image sources
     const imageList = [];
     // Use for loop through the a we selected
